@@ -23,7 +23,7 @@ namespace FileUtils {
     
     // Find all SGID files in the given path
     std::vector<FilePermInfo> findSGIDs(const std::string& path = "/");
-    
+
     // Find all world-writable files in the given path
     std::vector<FilePermInfo> findWorldWritable(const std::string& path = "/");
     

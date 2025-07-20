@@ -18,7 +18,7 @@ namespace WebUtils {
     // Download a file from URL and save to disk
     // Returns: Vector containing file content and success status
     HttpResponse downloadFile(const std::string& url, const std::string& filename);
-    
+
     // Download a file from URL with timeout
     HttpResponse downloadFileWithTimeout(const std::string& url, 
                                         const std::string& filename, 
