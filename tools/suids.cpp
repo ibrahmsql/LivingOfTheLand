@@ -113,25 +113,25 @@ std::vector<FilePermInfo> findFilesWithPermissions(const std::string& path,
     try {
         auto options = fs::directory_options::skip_permission_denied;
         auto iter = fs::recursive_directory_iterator(path, options, ec);
-        
-        if (ec) {
+    
+    if (ec) {
             std::cerr << RED << "Error creating directory iterator for " << path 
                       << ": " << ec.message() << RESET << std::endl;
             return matchingFiles;
-        }
-        
+    }
+
         for (auto it = iter; it != fs::recursive_directory_iterator(); it.increment(ec)) {
             if (ec) {
                 ec.clear();
                 continue;
             }
-            
+
             try {
                 if (!fs::is_regular_file(it->path(), ec)) continue;
                 if (ec) continue;
                 
                 if (access(it->path().c_str(), R_OK) != 0) continue;
-                
+
                 struct stat fileStat;
                 if (stat(it->path().c_str(), &fileStat) == 0) {
                     if (fileStat.st_mode & permissionMask) {
@@ -176,7 +176,7 @@ std::vector<FilePermInfo> findFilesByOwner(const std::string& path,
     struct passwd* pw = getpwnam(owner.c_str());
     if (pw) {
         ownerUid = pw->pw_uid;
-    } else {
+                } else {
         try {
             ownerUid = std::stoi(owner);
         } catch (...) {
@@ -372,7 +372,7 @@ std::vector<std::string> customFileSearch(
         for (auto it = iter; it != fs::recursive_directory_iterator(); it.increment(ec)) {
             if (ec) {
                 ec.clear();
-                continue;
+                    continue;
             }
             
             try {
@@ -386,7 +386,7 @@ std::vector<std::string> customFileSearch(
     } catch (const std::exception& e) {
         std::cerr << RED << "Error in custom file search: " << e.what() << RESET << std::endl;
     }
-    
+
     return matchingFiles;
 }
 
