@@ -189,11 +189,13 @@ void displayUserInfo(const UserInfo& info) {
         std::cout << YELLOW << "  [!] " << RESET << "User has sudo privileges!" << std::endl;
     }
     
-    // Check sudo permissions without password
-    std::string sudoOutput = execCommand("sudo -l -n 2>/dev/null");
-    if (!sudoOutput.empty() && sudoOutput.find("not allowed") == std::string::npos) {
+    // Check sudo permissions without password (non-interactive)
+    std::string sudoOutput = execCommand("sudo -n -l 2>/dev/null");
+    if (!sudoOutput.empty() && sudoOutput.find("not allowed") == std::string::npos && sudoOutput.find("password") == std::string::npos) {
         std::cout << RED << "  [!] " << RESET << "User can run sudo commands without password!" << std::endl;
         std::cout << sudoOutput << std::endl;
+    } else {
+        std::cout << YELLOW << "  [*] " << RESET << "Sudo access requires password or not available" << std::endl;
     }
 }
 
@@ -682,4 +684,4 @@ void performFullSystemAnalysis() {
     }
 }
 
-} // namespace SystemAnalysis 
+} // namespace SystemAnalysis

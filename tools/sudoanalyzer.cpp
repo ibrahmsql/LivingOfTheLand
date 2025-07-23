@@ -59,8 +59,19 @@ std::vector<SudoRule> analyzeSudoRules() {
     std::string currentUser = ExecUtils::execCommand("whoami");
     currentUser.erase(std::remove(currentUser.begin(), currentUser.end(), '\n'), currentUser.end());
     
-    // Try to list sudo rules
-    std::string sudoOutput = ExecUtils::execCommand("sudo -l 2>/dev/null");
+    // Detect operating system
+    std::string osType = ExecUtils::execCommand("uname -s");
+    osType.erase(std::remove(osType.begin(), osType.end(), '\n'), osType.end());
+    
+    // Try to list sudo rules without password prompt
+    std::string sudoOutput;
+    if (osType == "Darwin") {
+        // macOS - try without sudo first
+        sudoOutput = ExecUtils::execCommand("sudo -n -l 2>/dev/null");
+    } else {
+        // Linux - try without sudo first
+        sudoOutput = ExecUtils::execCommand("sudo -n -l 2>/dev/null");
+    }
     
     if (sudoOutput.empty()) {
         std::cout << YELLOW << "  [*] Unable to list sudo rules (password required or no sudo access)" << RESET << std::endl;
@@ -267,4 +278,4 @@ void displaySudoRules() {
     }
 }
 
-} // namespace SudoAnalysis 
+} // namespace SudoAnalysis

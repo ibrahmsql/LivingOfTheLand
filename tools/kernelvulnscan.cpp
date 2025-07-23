@@ -84,8 +84,7 @@ std::vector<KernelVulnerability> checkCommonVulnerabilities(const KernelInfo& ke
         {"CVE-2021-3156", {"Sudo Baron Samedit", "Critical"}},
         {"CVE-2021-33909", {"Sequoia - size_t-to-int conversion vulnerability", "High"}},
         {"CVE-2022-0847", {"Dirty Pipe - Overwriting data in read-only files", "Critical"}},
-        {"CVE-2022-2588", {"nft_object Use-After-Free vulnerability", "High"}},
-        {"CVE-
+        {"CVE-2022-2588", {"nft_object Use-After-Free vulnerability", "High"}}
     };
     
     // Check for DirtyCow (CVE-2016-5195)
@@ -216,4 +215,4 @@ void scanKernelVulnerabilities() {
     }
 }
 
-} // namespace KernelVulnScan 
+} // namespace KernelVulnScan
